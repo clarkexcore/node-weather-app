@@ -8,16 +8,16 @@ const city = process.argv[2];
 if(!city){
     console.log("Please Provide City");
 } else {
-    geocode(city, (error, data) => {
+    geocode(city, (error, {lat, lon, location}) => {
         if(error){
             return console.log(error);
         }
-        forecast(data.lat, data.lon, (error, forecastData) => {
+        forecast(lat, lon, (error, {summary, currentTemp, precip}) => {
             if(error){
                 return console.log(error);
             }
-            console.log(data.location);
-            console.log(`${forecastData.summary} It is currently ${forecastData.currentTemp} degrees outside, with a ${forecastData.precip}% chance of rain.`);
+            console.log(location);
+            console.log(`${summary} It is currently ${currentTemp} degrees outside, with a ${precip}% chance of rain.`);
         })
     });
 }
